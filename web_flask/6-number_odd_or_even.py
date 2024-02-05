@@ -52,7 +52,8 @@ def display_odd_or_even(n):
     This method displays a HTML page and
     shows if the number is odd or even
     """
-    return render_template('6-number_odd_or_even.html', number=n, parity=('even' if n % 2 == 0 else 'odd'))
+    return render_template('6-number_odd_or_even.html',
+                           number=n, parity=('even' if n % 2 == 0 else 'odd'))
 
 
 if __name__ == '__main__':
