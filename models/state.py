@@ -9,8 +9,8 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
     if models.storage_type == "db":
-    name = Column(String(128), nullable=False)
-    cities = orm.relationship('City', backref='state', cascade='all, delete')
+        name = Column(String(128), nullable=False)
+        cities = orm.relationship('City', backref='state', cascade='all, delete')
 
     else:
         name = ""
@@ -23,10 +23,10 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """ Getter for cities """
-            from models import storage
             from models.city import City
             cities_list = []
-            for city in storage.all(City).values():
+            all_cities = models.storage.all(city)
+            for city in all_cities.values():
                 if city.state_id == self.id:
                     cities_list.append(city)
             return cities_list

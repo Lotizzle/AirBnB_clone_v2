@@ -47,12 +47,11 @@ class FileStorage:
                     'Review': Review
                   }
         try:
-            temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
-                for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
-        except FileNotFoundError:
+                for key in temp:
+                    self.__objects[key] = classes[temp[key]['__class__']](**temp[key])
+        except Exception:
             pass
 
     def delete(self, obj=None):
@@ -67,5 +66,4 @@ class FileStorage:
 
     def close(self):
         """Deserializes the JSON file to objects"""
-
         self.reload()
