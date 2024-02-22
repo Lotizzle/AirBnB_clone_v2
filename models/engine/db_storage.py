@@ -31,9 +31,10 @@ class DBStorage:
         classes = HBNBCommand.classes
         new_dict = {}
         session = self.__session
+        cls_str = str(cls).split(".")[2][:-2]
         if cls:
-            for instance in session.query(classes[cls]).all():
-                new_dict[cls + '.' + instance.id] = instance
+            for instance in session.query(classes[cls_str]).all():
+                new_dict[cls_str + '.' + instance.id] = instance
             return new_dict
         else:
             for key, value in classes.items():
@@ -69,8 +70,8 @@ class DBStorage:
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
-        self.__session = Session
+        self.__session = Session()
 
     def close(self):
-        """Closes the session"""
-        self.__session.remove()
+        """closes the session"""
+        self.__session.close()
